@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI PRD Engine | Ship Product Requirements Without Wasted Tokens</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI PRD Engine helps product and engineering teams generate precise PRDs, design guides, and agentic prompts so you build right the first time, avoid technical debt, and save tokens with Claude by Anthropic.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            primary: '#5B4BFF',
+            secondary: '#EEF0FF',
+            accent: '#00E5A8',
+          },
+          boxShadow: {
+            smooth: '0 10px 40px rgba(0,0,0,0.1)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .font-heading {
+      font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 antialiased">
+  <div class="min-h-screen flex flex-col bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
+    <!-- Header -->
+    <header class="sticky top-0 z-40 border-b border-gray-800/70 bg-gray-950/80 backdrop-blur-xl">
+      <nav class="max-w-7xl mx-auto px-8 md:px-16 py-4 flex items-center justify-between">
+        <div class="flex items-center justify-between w-full">
+          <a href="https://heaventree.github.io/ai-prd-engine-2026-02-13-5y8wn" class="flex items-center gap-3 group">
+            <div class="relative">
+              <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-primary via-indigo-400 to-accent flex items-center justify-center shadow-smooth group-hover:scale-105 group-hover:shadow-xl transition-all duration-300 ease-out">
+                <!-- Heroicon: Rocket -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 15.75 9 12m0 0 2.25-6.75L15 9m-6 3 6 6m0 0 3.75-3.75M15 18l-3.75 3.75" />
+                </svg>
+              </div>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-heading font-semibold tracking-tight text-white text-lg leading-tight">AI PRD Engine</span>
+              <span class="text-xs text-gray-400 uppercase tracking-[0.2em]">Powered by Claude</span>
+            </div>
+          </a>
+          <a href="https://heaventree.github.io/ai-prd-engine-2026-02-13-5y8wn/blog.html" class="text-gray-300 hover:text-white transition-colors duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950 rounded-full px-1 py-0.5">
+            ← Back
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-16">
+      <article class="prose prose-lg max-w-none prose-invert">
+        <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-white leading-tight">
+          Designing AI‑Ready PRDs with Claude: A Practical Playbook for Product & Engineering Teams
+        </h1>
+
+        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=675&fit=crop&q=80" alt="Product and engineering team collaborating around AI-powered dashboards and laptops" class="w-full rounded-lg shadow-lg mb-8">
+
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Writing a solid product requirements document (PRD) has never been easy. In fast-moving teams, specs are often rushed, incomplete, or scattered across Slack, tickets, and slide decks. At the same time, large language models like Claude by Anthropic promise to accelerate documentation—yet many teams discover that naïve prompting creates a different problem: verbose, vague specs that burn tokens and still leave engineers guessing.
+        </p>
+        <p class="mb-6 leading-relaxed text-gray-200">
+          This guide walks through a practical, opinionated approach to designing <span class="text-accent">AI‑ready PRDs</span> that work with, not against, tools like Claude and AI PRD Engine. You’ll learn how to structure requirements so they’re easy for humans to understand, easy for AI to extend, and optimized for token efficiency—without sacrificing depth or technical accuracy.
+        </p>
+
+        <h2 class="text-3xl font-heading font-semibold mt-8 mb-4 text-white">
+          Why Traditional PRDs Break Down in an AI‑Powered Workflow
+        </h2>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Classic PRD templates were designed for a world of quarterly releases and heavyweight sign‑off processes. In an environment where teams ship weekly (or even daily) and regularly collaborate with AI, those old habits introduce friction and risk. The result is a familiar pattern: specs are either under‑baked bullet lists or over‑produced documents nobody fully reads.
+        </p>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          When you add generative AI into the mix, those weaknesses are amplified. If your inputs are fuzzy, your AI‑generated outputs will be even fuzzier. If your requirements mix strategy, UX, and implementation details in one long narrative, Claude will struggle to keep context straight, and your token consumption will quietly explode as you repeatedly resend the same background.
+        </p>
+        <p class="mb-6 leading-relaxed text-gray-200">
+          AI‑ready PRDs flip the script. Instead of treating the PRD as a static artifact, you treat it as a <span class="text-accent">structured knowledge surface</span> that humans and agents can both operate on. That means predictable sections, explicit constraints, and reusable summaries that let you compose focused, token‑efficient prompts.
+        </p>
+
+        <h3 class="text-2xl font-heading font-medium mt-6 mb-3 text-gray-100">
+          The three core failure modes of “AI‑generated” specs
+        </h3>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          When teams ask Claude to “write a PRD” from a loose description, they typically run into three recurring problems:
+        </p>
+        <ul class="list-disc list-inside mb-6 space-y-2">
+          <li class="text-gray-200">
+            <span class="font-medium text-accent">Unbounded scope:</span> the model over‑specifies adjacent features, adding flows the team never committed to building.
+          </li>
+          <li class="text-gray-200">
+            <span class="font-medium text-accent">Shallow technical rigor:</span> architecture, data, and non‑functional requirements (NFRs) are described in generic terms that don’t match your stack or constraints.
+          </li>
+          <li class="text-gray-200">
+            <span class="font-medium text-accent">Token bloat:</span> every iteration resends the entire context, so each “small tweak” silently consumes thousands of additional tokens.
+          </li>
+        </ul>
+        <p class="mb-6 leading-relaxed text-gray-200">
+          The solution is not to give up on AI, but to change how you design PRDs and the prompt flows that generate them. With a bit of upfront structure, you can guide Claude to produce <span class="text-accent">precise, compact, and review‑ready</span> requirements that engineers actually trust.
+        </p>
+
+        <h2 class="text-3xl font-heading font-semibold mt-8 mb-4 text-white">
+          The Anatomy of an AI‑Friendly PRD
+        </h2>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          An AI‑friendly PRD keeps humans in the loop while optimizing for machine consumption. Instead of a long continuous narrative, it is composed of clearly labeled, self‑contained sections that map to common prompt stages. Each section answers a specific question Claude—and your teammates—need to understand before making trade‑offs.
+        </p>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          While every organization has its own flavor, high‑performing teams converge on a similar backbone. Below is a structure that works well with Claude and tools like AI PRD Engine, especially when you want to avoid technical debt and token waste.
+        </p>
+
+        <h3 class="text-2xl font-heading font-medium mt-6 mb-3 text-gray-100">
+          1. Problem & context (the “why”)
+        </h3>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          This section exists to align stakeholders on <span class="font-medium">why</span> the work matters and which bet you’re placing. It should be brutally concise and written in language that both executives and ICs can follow.
+        </p>
+        <ul class="list-disc list-inside mb-6 space-y-2">
+          <li class="text-gray-200">One‑paragraph problem statement in customer terms.</li>
+          <li class="text-gray-200">Key metrics or KPIs you expect to move.</li>
+          <li class="text-gray-200">Any non‑negotiable constraints (timeline, compliance, platform).</li>
+        </ul>
+
+        <h3 class="text-2xl font-heading font-medium mt-6 mb-3 text-gray-100">
+          2. Goals, non‑goals, and success criteria
+        </h3>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Ambiguity around goals is one of the top drivers of rework. AI makes it easy to generate surface‑level lists, but you still need to own the trade‑offs. A good AI‑ready PRD spells out what you will not do with equal clarity.
+        </p>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          When using Claude, this section often becomes a compact “control file” you can reuse across prompt flows: for UX exploration, for engineering scoping, and later for release validation. Keeping it short and precise dramatically reduces redundant tokens.
+        </p>
+
+        <h3 class="text-2xl font-heading font-medium mt-6 mb-3 text-gray-100">
+          3. Primary user flows and edge cases
+        </h3>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Modern PRDs focus more on flows than on static pages. Rather than describe “the settings page,” describe the <span class="text-accent">journey</span>: how a user arrives, what they’re trying to accomplish, and how the system responds when things go wrong.
+        </p>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Claude is particularly strong at enumerating edge cases once you give it a clean description of the happy path. With AI PRD Engine, you can chain prompts so that:
+        </p>
+        <ol class="list-decimal list-inside mb-6 space-y-2">
+          <li class="text-gray-200">You first lock in the primary flow in human‑reviewable language.</li>
+          <li class="text-gray-200">Then, an agentic prompt asks Claude to stress‑test that flow for failure modes.</li>
+          <li class="text-gray-200">Finally, you merge and prune edge cases, keeping only the ones that materially affect scope or UX.</li>
+        </ol>
+
+        <h3 class="text-2xl font-heading font-medium mt-6 mb-3 text-gray-100">
+          4. Functional and non‑functional requirements
+        </h3>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          This is where traditional PRDs either become too vague (“the system should be fast”) or unrealistically strict (“respond in under 20ms globally”) with no relation to reality. AI can help you articulate rigorous but achievable requirements—as long as you anchor it in your stack’s capabilities.
+        </p>
+        <p class="mb-6 leading-relaxed text-gray-200">
+          With Claude, an effective pattern is to provide a small table of your typical performance and reliability targets, then ask it to propose concrete NFRs that align with those baselines. AI PRD Engine wraps this in guardrails so you don’t accidentally accept hallucinated SLAs your infra can’t meet.
+        </p>
+
+        <h2 class="text-3xl font-heading font-semibold mt-8 mb-4 text-white">
+          Turning PRDs into Agentic Prompt Flows with Claude
+        </h2>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Once your PRD structure is in place, the next step is designing <span class="text-accent">agentic prompt flows</span>—multi‑step sequences that let Claude act like a focused collaborator rather than a stream‑of‑consciousness writer. The goal is to decompose work into small, deterministic steps that minimize context size and maximize clarity.
+        </p>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Instead of “Write the whole PRD,” think in terms of orchestration:
+        </p>
+        <ul class="list-disc list-inside mb-6 space-y-2">
+          <li class="text-gray-200">One flow to clarify the problem and goals.</li>
+          <li class="text-gray-200">Another to enumerate user stories and acceptance criteria.</li>
+          <li class="text-gray-200">A third to translate those stories into design states and component contracts.</li>
+          <li class="text-gray-200">A final pass to spot technical risks and tech‑debt traps.</li>
+        </ul>
+
+        <h3 class="text-2xl font-heading font-medium mt-6 mb-3 text-gray-100">
+          A sample four‑stage Claude flow for a new feature
+        </h3>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          To make this concrete, here’s a simplified version of a flow AI PRD Engine might orchestrate for a “usage‑based billing dashboard”:
+        </p>
+        <ol class="list-decimal list-inside mb-6 space-y-2">
+          <li class="text-gray-200">
+            <span class="font-medium text-accent">Clarify & compress:</span> Claude asks you targeted questions about audience, billing model, and existing analytics, then returns a one‑page structured brief.
+          </li>
+          <li class="text-gray-200">
+            <span class="font-medium text-accent">Flow & states:</span> using only the brief, Claude proposes primary flows (view usage, export data, debug discrepancies) and associated UI states (empty, loading, error, suspicious activity).
+          </li>
+          <li class="text-gray-200">
+            <span class="font-medium text-accent">Requirements & NFRs:</span> Claude converts flows into functional requirements and suggests NFRs aligned with your historical latency/error budgets.
+          </li>
+          <li class="text-gray-200">
+            <span class="font-medium text-accent">Risk review:</span> finally, it highlights potential data‑model changes, backfill requirements, migration paths, and observability gaps that could create technical debt if ignored.
+          </li>
+        </ol>
+        <p class="mb-6 leading-relaxed text-gray-200">
+          At each step, the context is <span class="font-medium">narrow, token‑efficient, and reviewable</span>. You can stop after any stage, edit by hand, or branch into a separate conversation with design or engineering without re‑explaining everything from scratch.
+        </p>
+
+        <h2 class="text-3xl font-heading font-semibold mt-8 mb-4 text-white">
+          Avoiding Technical Debt Before It Starts
+        </h2>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          One of the strongest arguments for AI‑ready PRDs is their impact on technical debt. Many teams think of tech debt as a purely code‑level phenomenon, but in practice, most of it is seeded upstream—when requirements fail to capture constraints, migrations, or longer‑term platform strategy.
+        </p>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Claude is excellent at <span class="text-accent">raising questions you forgot to ask</span>. With the right prompts, it can act as a relentless reviewer that never gets tired of asking:
+        </p>
+        <ul class="list-disc list-inside mb-6 space-y-2">
+          <li class="text-gray-200">“What happens to existing users when this ships?”</li>
+          <li class="text-gray-200">“Which events, logs, or metrics will help us debug this in production?”</li>
+          <li class="text-gray-200">“Are there regulatory or privacy implications you haven’t addressed?”</li>
+        </ul>
+        <p class="mb-6 leading-relaxed text-gray-200">
+          AI PRD Engine bakes these questions into review prompts so they happen <span class="font-medium">before</span> implementation. Instead of relying on a heroic staff engineer to catch issues in the design review, you can systematically surface risk areas in the PRD itself—and document mitigation strategies alongside them.
+        </p>
+
+        <h3 class="text-2xl font-heading font-medium mt-6 mb-3 text-gray-100">
+          A checklist for tech‑debt‑aware PRDs
+        </h3>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          As you adapt your own templates, consider adding a short, explicit section that Claude can help you fill out:
+        </p>
+        <ul class="list-disc list-inside mb-6 space-y-2">
+          <li class="text-gray-200">Data model changes: new tables, fields, or relationships.</li>
+          <li class="text-gray-200">Backward compatibility: how existing APIs, clients, and workflows are affected.</li>
+          <li class="text-gray-200">Migrations: required backfills, one‑time scripts, or rollout plans.</li>
+          <li class="text-gray-200">Observability: new logs, metrics, or traces needed to operate the feature safely.</li>
+          <li class="text-gray-200">Sunset criteria: conditions under which this feature or path can be removed.</li>
+        </ul>
+        <p class="mb-6 leading-relaxed text-gray-200">
+          By standardizing this checklist and using Claude to populate first drafts, you convert “we’ll figure it out later” into <span class="text-accent">documented, reviewable decisions</span>—a small change that compounds into cleaner architectures over time.
+        </p>
+
+        <h2 class="text-3xl font-heading font-semibold mt-8 mb-4 text-white">
+          Making AI‑Ready PRDs a Habit, Not a One‑Off Experiment
+        </h2>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          The teams that get the most value from Claude and AI PRD Engine aren’t the ones running one‑off experiments; they are the ones who <span class="font-medium">productize their own best practices</span>. They treat successful PRDs and prompt flows as reusable assets, not one‑time docs buried in a folder.
+        </p>
+        <p class="mb-4 leading-relaxed text-gray-200">
+          Concretely, that looks like:
+        </p>
+        <ul class="list-disc list-inside mb-6 space-y-2">
+          <li class="text-gray-200">
+            Maintaining a small library of PRD templates for common feature types (net‑new surface, pricing change, integration, internal tooling).
+          </li>
+          <li class="text-gray-200">
+            Versioning prompt flows as they improve, and annotating them with examples of successful outcomes.
+          </li>
+          <li class="text-gray-200">
+            Training new PMs, designers, and tech leads to think in terms of flows, constraints, and NFRs—not just UI screenshots.
+          </li>
+        </ul>
+        <p class="mb-6 leading-relaxed text-gray-200">
+          Over time, your organization builds a <span class="text-accent">shared language</span> around what “good” looks like: clean goals, explicit trade‑offs, well‑specified edge cases, and token‑efficient workflows that respect your AI budget. AI PRD Engine’s role is to codify that language, while Claude acts as the reasoning engine that helps you apply it quickly to each new initiative.
+        </p>
+
+        <p class="mb-4 leading-relaxed text-gray-200">
+          If you’re already using Claude or considering an AI‑first product development stack, upgrading your PRD habits is one of the highest‑leverage moves you can make. Start small with your next feature, design the PRD as if an agent will need to understand it—and you’ll find that humans, too, ship with more confidence and far less rework.
+        </p>
+        <p class="mb-0 leading-relaxed text-gray-200">
+          The future of product documentation is not more pages; it’s <span class="text-accent">smarter, structured collaboration</span> between product teams and AI. AI‑ready PRDs are where that collaboration begins.
+        </p>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-900 bg-gray-950">
+      <div class="max-w-7xl mx-auto px-8 md:px-16 py-10">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-2xl bg-primary/20 flex items-center justify-center">
+              <!-- Heroicon: Rocket -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 15.75 9 12m0 0 2.25-6.75L15 9m-6 3 6 6m0 0 3.75-3.75M15 18l-3.75 3.75" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-300 font-medium">AI PRD Engine</p>
+              <p class="text-xs text-gray-500 font-light">Built for Claude-powered product teams</p>
+            </div>
+          </div>
+          <div class="flex flex-col md:items-end gap-1">
+            <p class="text-xs text-gray-400 font-light">
+              Contact: <span class="text-gray-300">pop@pop.com</span>
+            </p>
+            <p class="text-xs text-gray-500 font-light">
+              © 2025 AI PRD Engine. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // FAQ Accordion Toggle (if FAQ-like components exist in future extensions)
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        if (question) {
+          question.addEventListener('click', () => {
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = !answer.classList.contains('hidden');
+            
+            faqItems.forEach(otherItem => {
+              if (otherItem !== item) {
+                otherItem.querySelector('.faq-answer')?.classList.add('hidden');
+                otherItem.querySelector('.faq-icon')?.classList.remove('rotate-180');
+              }
+            });
+            
+            answer?.classList.toggle('hidden');
+            item.querySelector('.faq-icon')?.classList.toggle('rotate-180');
+          });
+        }
+      });
+
+      // Smooth Scroll for Anchor Links (kept for consistency if anchors are added later)
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href !== '#' && href.length > 1) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
